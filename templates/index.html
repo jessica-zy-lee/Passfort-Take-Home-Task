@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <title>Passfort Wiki</title>
+    </head>
+    <body>
+        <h1>Passfort Wiki</h1>
+        <h2>All Pages</h2>
+        <ul id="listOfPages"></ul>
+        <h3 id="documentTitle"></h3>
+        <p id="documentContent"></p>
+        <h4>Revisions</h4>
+        <ul id="listOfRevisions"></ul>
+    </body>
+
+    <script>
+        // Get all relevant pages and display those pages in the unordered list listOfPages
+        function getPages() {
+            axios.get('/pages').then(displayPages)
+        }
+
+        // Get the latest version of the document by default and display on screen
+        function getDocument(documentTitle, documentRevision) {
+            if (documentRevision) {
+                axios.get(`/page/${documentTitle}/${documentRevision}`).then(displayDocument)
+            } else {
+                axios.get(`/page/${documentTitle}/latest`).then(displayDocument)
+            }
+            axios.get(`/page/${documentTitle}`).then(response => displayRevisions(response, documentTitle))
+        }
+
+        function displayPages(response) {
+            const pageTitles = response.data.titles
+            const listOfPages = document.getElementById("listOfPages")
+            pageTitles.forEach((title) => {
+                let listItem = `
+                    <li>
+                        <a href="#" onclick="getDocument('${title}')">
+                            ${title}
+                        </a>
+                    </li>
+                `
+                listOfPages.innerHTML += listItem
+            })
+        }
+
+        function displayDocument(response, documentTitle) {
+            const documentContent = response.data
+            // const data = documentContent.data
+            // const title = documentContent.title
+            const { data, title } = documentContent
+
+            const titleSection = document.getElementById("documentTitle")
+            titleSection.innerHTML = title
+
+            const contentSection = document.getElementById("documentContent")
+            contentSection.innerHTML = data
+        }
+
+        function displayRevisions(response, documentTitle) {
+            const revisionTimestamps = response.data.revisions
+            const listOfRevisions = document.getElementById("listOfRevisions")
+            listOfRevisions.innerHTML = ""
+            revisionTimestamps.forEach((revision) => {
+                let listItem = `
+                    <li>
+                        <a href="#" onclick="getDocument('${documentTitle}','${revision}')">
+                            ${revision}
+                        </a>
+                    </li>
+                `
+                listOfRevisions.innerHTML += listItem
+            })
+        }
+
+        getPages()
+    </script>
+</html>
