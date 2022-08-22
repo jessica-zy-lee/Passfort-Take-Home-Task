@@ -11,11 +11,11 @@ Axios - is used to handle API, this is imported directly in the HTML, so there i
 
 #### Functions
 There are five functions:
-- getPages() gets the response from /pages API endpoint and call the displayPages function
-- displayPages(response) gets the response from the /pages API and list all the pages in the DOM element with the id "listOfPages", the lists will be an anchor tag which triggers the getDocument function on click
-- getDocument(documentTitle, documentRevision) is a function which gets the document and/or specific revision of the document. documentRevision is an optional argument. When omitted, the default behaviour is to get the latest version of the document
-- displayDocument(response) displays the title and the content (data) of the specific document revision from the API response
-- displayRevision(response, documentTitle) displays the revision as a clickable list, the list items are anchor tags of the revision number which triggers the getDocument function on click
+- `getPages()` gets the response from /pages API endpoint and call the displayPages function
+- `displayPages(response)` gets the response from the /pages API and list all the pages in the DOM element with the id "listOfPages", the lists will be an anchor tag which triggers the getDocument function on click
+- `getDocument(documentTitle, documentRevision)` is a function which gets the document and/or specific revision of the document. documentRevision is an optional argument. When omitted, the default behaviour is to get the latest version of the document
+- `displayDocument(response)` displays the title and the content (data) of the specific document revision from the API response
+- `displayRevision(response, documentTitle)` displays the revision as a clickable list, the list items are anchor tags of the revision number which triggers the getDocument function on click
 
 ## Future work
 As I am relatively junior at my level, My code has a few limitations which I would like to add when I gain more experience
