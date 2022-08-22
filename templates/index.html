@@ -48,10 +48,8 @@
             })
         }
 
-        function displayDocument(response, documentTitle) {
+        function displayDocument(response) {
             const documentContent = response.data
-            // const data = documentContent.data
-            // const title = documentContent.title
             const { data, title } = documentContent
 
             const titleSection = document.getElementById("documentTitle")
